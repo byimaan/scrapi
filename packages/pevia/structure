@@ -1,0 +1,40 @@
+Overall Architecture design (subjective to change)
+The following is base structural design planned as to be adaptive for future versions.
+
+@scarpi/pevia
+├─ src /
+│  ├─ cli/
+│  │  └─ index.ts                 // commander wiring
+│  ├─ config/
+│  │  ├─ schema.ts                // zod schema + defaults
+│  │  └─ loader.ts                // cosmiconfig merge + env + flags
+│  ├─ engine/
+│  │  ├─ engine.ts                // Orchestrates the pipeline
+│  │  ├─ types.ts                 // Core interfaces (stable!)
+│  │  ├─ hooks.ts                 // Plugin bus + lifecycle
+│  │  ├─ crawler/
+│  │  │  ├─ crawler.ts            // queue, robots, BFS/limits
+│  │  │  └─ robots.ts             // Not sure to implement
+│  │  ├─ render/
+│  │  │  ├─ html.ts               // undici + cheerio
+│  │  │  └─ headless.ts           // (Playwright) lazy-loaded
+│  │  ├─ extract/
+│  │  │  ├─ html-images.ts        // < img >, srcset, data-*
+│  │  │  ├─ css-bg.ts             // background-image:url(...)
+│  │  │  └─ meta-og.ts            // og:image / twitter:image
+│  │  ├─ filter/
+│  │  │  ├─ validators.ts         // width/height/format/url rules
+│  │  │  └─ dedupe.ts             // content-hash + URL dedupe
+│  │  ├─ download/
+│  │  │  ├─ probe.ts              // HEAD/first bytes
+│  │  │  └─ download.ts           // streaming save
+│  │  └─ store/
+│  │     ├─ fs-store.ts           // folder/file templates
+│  │     └─ state.ts              // sqlite (better-sqlite3)
+│  ├─ plugins/
+│  │  └─ registry.ts              // discover + load
+│  ├─ util/
+│  │  ├─ url.ts, slug.ts, log.ts, hash.ts, mime.ts
+│  └─ index.ts
+│  │
+│  └─ tests/ (unit + integration + e2e)
