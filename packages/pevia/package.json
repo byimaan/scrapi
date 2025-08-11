@@ -9,5 +9,11 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@consify/ansi": "^1.0.0",
+    "commander": "^14.0.0",
+    "cosmiconfig": "^9.0.0",
+    "zod": "^4.0.16"
+  }
 }
