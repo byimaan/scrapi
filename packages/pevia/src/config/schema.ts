@@ -7,7 +7,7 @@ export const ConfigSchema = z.object({
 
     out: z.string().default("."), //outDir
     render: z.enum(['auto','html','headless']).default('auto'), //How src render HTML- SSR, JS
-    // robots: z.enum(['on','off']).default('on'), // Should respect website's scrapping policy?
+    robots: z.enum(['on','off']).default('on'), // Should respect website's scrapping policy?
 
     // control/define how we crawl to other URLs
     crawl: z.object({
@@ -20,7 +20,7 @@ export const ConfigSchema = z.object({
         timeoutMs: z.number().int().default(30000),
         retry: z.number().int().min(0).default(2),
         retryDelayMs: z.number().int().min(0).default(500),
-        siteMap: z.boolean().default(false), // If website offers a sitemap url, could be useful to scan website
+        sitemap: z.boolean().default(false), // If website offers a sitemap url, could be useful to scan website
     }),
 
     // What are the sources?
