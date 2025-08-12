@@ -3,8 +3,23 @@ import {cosmiconfig} from "cosmiconfig";
 import * as F from "../constants/flags";
 import { ConfigSchema,ResolveConfig } from "./schema";
 import { boolParse,intParse,numParse,csvParse,isUndefined,isPlainObject } from "../util/funcs";
+import { partialRecord } from "zod";
 
 type PartialConfig = Partial<ResolveConfig>;
+
+
+//prune: keep the undefined values completely untouched
+const prune = (cfg:any) => { 
+    if (isPlainObject(cfg)){
+        const subCfg:any = {};
+        for(let [k,v] of Object.entries(cfg)){
+            const prv = prune(v);
+            if (!isUndefined(prv)) subCfg[k]=prv;
+        };
+        return Object.keys(subCfg).length ? subCfg : undefined;
+    };
+    return cfg
+};
 
 // read environment configurations, env. variables must start with 'PEVIA_*'
 async function loadEnvConfig(
@@ -58,18 +73,6 @@ async function loadEnvConfig(
         },
         
         plugins: csvParse(eVar(F.PLUGINS)) as string[],
-    };
-    //prune: keep the undefined values completely untouched
-    const prune = (cfg:any) => { 
-        if (isPlainObject(cfg)){
-            const subCfg:any = {};
-            for(let [k,v] of Object.entries(cfg)){
-                const prv = prune(v);
-                if (!isUndefined(prv)) subCfg[k]=prv;
-            };
-            return Object.keys(subCfg).length ? subCfg : undefined;
-        };
-        return cfg
     };
     envCfg = prune(envCfg) ?? {};
     return envCfg;
@@ -145,4 +148,62 @@ export async function resolveConfig(
         throw badConfigError;
     }
     return parsed.data; // parsed configuration 'cfg'
+};
+
+export function parseCliFlagsIntoPartialConfig(
+    flags:any
+):PartialConfig{
+    const partial:PartialConfig = {
+        topic: flags.topic,
+        media: flags.media, // only images for v1
+        out:flags.out,
+        render: flags.render,
+        robots:flags.robots,
+
+        crawl:{
+            depth:intParse(flags.depth) as any,
+            maxPages:intParse(flags.maxImages) as any,
+            sameOrigin: boolParse(flags.sameOrigin) as any,
+            domains: csvParse(flags.domains) as any,
+            concurrency:intParse(flags.concurrency) as any,
+            rateLimit:numParse(flags.rateLimit) as any,
+            timeoutMs:intParse(flags.timeoutMs) as any,
+            retry:intParse(flags.retry) as any,
+            retryDelayMs:intParse(flags.retryDelayMs) as any,
+            sitemap:boolParse(flags.sitemap) as any,
+        },
+
+        extract:{
+            attrs: csvParse(flags.attrs) as any,
+            css:boolParse(flags.includeCss) as any,
+            opengraph:boolParse(flags.opengraph) as any,
+        },
+
+        filter:{
+            minWidth:intParse(flags.minWidth) as any,
+            minHeight:intParse(flags.minHeight) as any,
+            formats: csvParse(flags.formats) as any,
+            altIncludes: csvParse(flags.altIncludes) as any,
+            altExcludes: csvParse(flags.altExcludes) as any,
+            maxImages:intParse(flags.maxImages) as any,
+            contentHash:boolParse(flags.contentHash) as any,
+            skipExternalImages: boolParse(flags.skipExternalImages) as any,
+            probeBytes: intParse(flags.probeBytes) as any
+        },
+
+        output: {
+            folderTemplate: flags.folderTemplate,
+            fileTemplate: flags.fileTemplate,
+            meta: flags.meta,
+            state:flags.state
+        },
+        
+        plugins: csvParse(flags.plugins) as any,
+
+        // Could implement in future...
+        // dryRun: !!flags.dryRun,
+        // json:!!flags.json
+    };
+    return prune(partial) ?? {}
 }
+
