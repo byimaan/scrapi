@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "strict": true, /*Strict type checking during development*/
+        "esModuleInterop": false, /*Enable compatibility with CommonJS and Es modules, works when you import from CJS file as default import. Effects runtime */
+        "forceConsistentCasingInFileNames": true, /*Useful for cross-platform projects, because file name is case sensitive in some OS*/
+        "skipLibCheck": true, /*Skip type checking for declaration file (*.d.ts)*/
+        "checkJs": true, /*Enable type checking for JS files too*/
+        "allowJs": true, /*Allow JS files to also be a part of compilation*/
+        "allowSyntheticDefaultImports": true, /*Where esModuleInterop also make changes in the generated runtime code, but allowSyntheticDefaultImports doesn't effect runtime, only works during development for type checking*/
+        
+
+        "lib": ["ES2022"],
+        "target": "es2022",
+        "module":"NodeNext",
+        "moduleResolution": "NodeNext",
+        "outDir": "../lib/esm",
+
+        "noEmitOnError": true,
+
+        "moduleDetection": "force",
+
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "declarationDir": "../lib/esm/types"
+    },
+    "include": ["../src"],
+    "exclude": ["../lib","../node_modules"]
+}
