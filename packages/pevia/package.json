@@ -40,5 +40,8 @@
     "commander": "^14.0.0",
     "cosmiconfig": "^9.0.0",
     "zod": "^4.0.16"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.4"
   }
 }

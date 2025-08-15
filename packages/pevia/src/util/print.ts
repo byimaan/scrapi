@@ -1,6 +1,6 @@
 import clx from "@consify/ansi";
 import { isPlainObject } from "./funcs.js";
-export const displayConfig = (obj:Record<string,any>,pb:number,pa=5) => {
+export const displayConfig = (obj:Record<string,any>,pb:number,pa=2) => {
     for(let [k,v] of Object.entries(obj)){
         let val = v;
         if (typeof v === 'string') val = `"${clx.green.write(v)}"`;
@@ -9,9 +9,10 @@ export const displayConfig = (obj:Record<string,any>,pb:number,pa=5) => {
         else if (typeof v === 'number') val = clx.magenta.write(v)
         
         if (isPlainObject(v)){
-            clx.bold.magenta.log(' '.repeat(pb) + `${k} configuration \n`.toUpperCase())
+            clx.bold.magenta.log('\n' + ' '.repeat(pb) + `${k} configuration`.toUpperCase())
             displayConfig(v,pb*2,pa)
         } else {
+            if (Array.isArray(val)) val = '[' + val.join(', ') + ']'
             console.log(' '.repeat(pb) + clx.italic.blue.write(k) + ':' + ' '.repeat(pa) + val)
         }
     }

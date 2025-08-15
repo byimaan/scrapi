@@ -33,7 +33,7 @@ export default function scrape(program:Command){
         ).option(
             '--same-origin', 'Restrict to stay on same origin'
         ).option(
-            '--domains <list>', 'Allowed domains (csv)'
+            '--domains [list]', 'Allowed domains (csv)'
         ).option(
             '--concurrency <n>', 'Parallel fetches', 
         ).option(
@@ -49,7 +49,7 @@ export default function scrape(program:Command){
         )
         //extract
         .option(
-            '--attrs <list>', 'HTML attributes to check for image URLs (comma separated)'
+            '--attrs [list]', 'HTML attributes to check for image URLs (comma separated)'
         ).option(
             '--include-css', 'Parse CSS  for background image URLs'
         ).option(
@@ -57,15 +57,15 @@ export default function scrape(program:Command){
         )
         //filter
         .option(
-            '--formats <csv>', 'Allowed image formats, csv (jpg,png,webp)'
+            '--formats [csv]', 'Allowed image formats, csv (jpg,png,webp)'
         ).option(
             '--min-width <px>', 'Minimum width', 
         ).option(
             '--min-height <px>', 'Minimum height', 
         ).option(
-            '--alt-includes <csv>', 'Accept if alt/URL/filename contains any (csv)'
+            '--alt-includes [csv]', 'Accept if alt/URL/filename contains any (csv)'
         ).option(
-            '--alt-excludes <csv>', 'Reject if alt/URL/filename contains any (csv)'
+            '--alt-excludes [csv]', 'Reject if alt/URL/filename contains any (csv)'
         ).option(
             '--max-images <n>', 'Maximum images cap', 
         ).option(
@@ -87,7 +87,7 @@ export default function scrape(program:Command){
         )
         //plugins
         .option(
-            '--plugins <csv>', 'Comma separated plugin package names'
+            '--plugins [csv]', 'Comma separated plugin package names'
         )
         //dx
         .option(
@@ -106,8 +106,8 @@ export default function scrape(program:Command){
                     const cliCfg = parseCliFlagsIntoPartialConfig(flags);
                     const cfg = await resolveConfig(cliCfg);
                     if (flags.json){
-                        console.log(clx.bold.magenta.write('PEVIA-CONFIGURATION ') + clx.italic.green.write(`( ${url} ) ...\n`))
-                        displayConfig(cfg,8)
+                        console.log(clx.bold.magenta.write('PEVIA-CONFIGURATION ') + clx.italic.green.write(`( ${url} ) ...`))
+                        displayConfig(cfg,8, 1)
                     };
                     clx.green.log('Successfully parsed CLI flags')
                     process.exit(0)

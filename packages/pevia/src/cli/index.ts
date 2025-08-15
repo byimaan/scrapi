@@ -23,7 +23,7 @@ const inject = (
 });
 
 inject(scrape).into(program);
-
+program.parse()
 
 
 

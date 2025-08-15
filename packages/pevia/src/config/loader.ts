@@ -161,7 +161,7 @@ export function parseCliFlagsIntoPartialConfig(
 
         crawl:{
             depth:intParse(flags.depth) as any,
-            maxPages:intParse(flags.maxImages) as any,
+            maxPages:intParse(flags.maxPages) as any,
             sameOrigin: boolParse(flags.sameOrigin) as any,
             domains: csvParse(flags.domains) as any,
             concurrency:intParse(flags.concurrency) as any,
