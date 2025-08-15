@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {Command} from 'commander';
-import scrape from './cmds/scrape';
+import scrape from './cmds/scrape.js';
 
 
 const program = new Command();

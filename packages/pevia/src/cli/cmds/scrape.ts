@@ -1,7 +1,7 @@
 import type { Command } from "commander";
 import clx from "@consify/ansi";
-import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader";
-import { displayConfig } from "../../util/print";
+import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader.js";
+import { displayConfig } from "../../util/print.js";
 
 
 export default function scrape(program:Command){
@@ -101,7 +101,7 @@ export default function scrape(program:Command){
         )
         
         .action(
-            async (url,flags) => {
+            async (url: string, flags: Record<string, unknown>) => {
                 try {
                     const cliCfg = parseCliFlagsIntoPartialConfig(flags);
                     const cfg = await resolveConfig(cliCfg);

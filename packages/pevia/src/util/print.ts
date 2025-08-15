@@ -1,5 +1,5 @@
 import clx from "@consify/ansi";
-import { isPlainObject } from "./funcs";
+import { isPlainObject } from "./funcs.js";
 export const displayConfig = (obj:Record<string,any>,pb:number,pa=5) => {
     for(let [k,v] of Object.entries(obj)){
         let val = v;

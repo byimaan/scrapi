@@ -1,9 +1,8 @@
 import clx from "@consify/ansi";
 import {cosmiconfig} from "cosmiconfig";
-import * as F from "../constants/flags";
-import { ConfigSchema,ResolveConfig } from "./schema";
-import { boolParse,intParse,numParse,csvParse,isUndefined,isPlainObject } from "../util/funcs";
-import { partialRecord } from "zod";
+import * as F from "../constants/flags.js";
+import { ConfigSchema, type ResolveConfig } from "./schema.js";
+import { boolParse,intParse,numParse,csvParse,isUndefined,isPlainObject } from "../util/funcs.js";
 
 type PartialConfig = Partial<ResolveConfig>;
 
