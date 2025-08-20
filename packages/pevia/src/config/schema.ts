@@ -1,6 +1,6 @@
 import {z} from "zod"
 import { isPlainObject } from "../util/funcs";
-
+import { DEFAULT_IMG_FORMATS, EXTRACT_ATTRIBUTES, MEDIAS, RENDER_MODES, SWITCHES } from "../constants/literals";
 /**
  * Schema is buildup using following pieces:-
  *  [1] Base props (topic, media, out, ...)
@@ -34,7 +34,7 @@ const CrawlSchema = z.preprocess(
 const ExtractSchema = z.preprocess(
     esm => isPlainObject(esm) ? esm : {},
     z.object({
-        attrs: z.array(z.string()).default(['src','srcset','data-src','data-original']),
+        attrs: z.array(z.string()).default(EXTRACT_ATTRIBUTES as any as string[]),
         css: z.boolean().default(false),
         opengraph: z.boolean().default(true), // og:image | twitter:image ... open-graph imgs in metadata
     }),
@@ -45,7 +45,7 @@ const FilterSchema = z.preprocess(
     z.object({
         minWidth: z.number().int().default(256),
         minHeight: z.number().int().default(256),
-        formats: z.array(z.string()).default(['jpg','jpeg','png','webp']),
+        formats: z.array(z.string()).default(DEFAULT_IMG_FORMATS as any as string[]),
         altIncludes: z.array(z.string()).default([]),
         altExcludes:z.array(z.string()).default([]),
         maxImages: z.number().positive().default(100),
@@ -75,11 +75,11 @@ const PluginSchema = z.preprocess(
 // Core default CLI state
 export const ConfigSchema = z.object({
     topic: z.string().default(""),
-    media: z.enum(['image','video']).default('image'),
+    media: z.enum(MEDIAS).default('image'),
 
     out: z.string().default("."), //outDir
-    render: z.enum(['auto','html','headless']).default('auto'), //How src render HTML- SSR, JS
-    robots: z.enum(['on','off']).default('on'), // Should respect website's scrapping policy?
+    render: z.enum(RENDER_MODES).default('auto'), //How src render HTML- SSR, JS
+    robots: z.enum(SWITCHES).default('on'), // Should respect website's scrapping policy?
 
     crawl: CrawlSchema,
 
