@@ -38,3 +38,26 @@ The following is base structural design planned as to be adaptive for future ver
 │  └─ index.ts
 │  │
 │  └─ tests/ (unit + integration + e2e)
+
+
+Work strategy (PR sequence you can actually ship)
+
+PR1 : Config & CLI: (done) schema, loader, minimal CLI.
+
+PR2 : Types & Logger: stage interfaces, log wrapper (JSON+pretty), safeStage.
+
+PR3 : HTML Renderer + Extractors (html, og): depth=0 pipeline, no DB yet; write files & manifest.
+
+PR4 : Validators + Probe + Sharp: formats, probe bytes, min size.
+
+PR5 : Downloader + Hash + Deduper + DB: sqlite wiring, resume basics.
+
+PR6 : Crawler (depth, max-pages, robots, sitemap): BFS with p‑queue & rate limit.
+
+PR7 : Headless Renderer: Playwright lazy; auto policy; failover.
+
+PR8 : CSS background extractor: same‑origin CSS parse.
+
+PR9 : Polish: summaries, exit codes, doctor, error messages, docs/comments.
+
+PR10 : E2E Tests: fixture server, CLI tests, CI matrix.
