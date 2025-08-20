@@ -1,8 +1,8 @@
 import type { Command } from "commander";
 import clx from "@consify/ansi";
-import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader.js";
-import { displayConfig } from "../../util/print.js";
-
+import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader";
+import { displayConfig } from "../../util/log";
+import { runJob } from "../../engine/engine";
 
 export default function scrape(program:Command){
     return program.command(
@@ -102,20 +102,18 @@ export default function scrape(program:Command){
         
         .action(
             async (url: string, flags: Record<string, unknown>) => {
-                try {
-                    const cliCfg = parseCliFlagsIntoPartialConfig(flags);
-                    const cfg = await resolveConfig(cliCfg);
-                    if (flags.json){
-                        console.log(clx.bold.magenta.write('PEVIA-CONFIGURATION ') + clx.italic.green.write(`( ${url} ) ...`))
-                        displayConfig(cfg,8, 1)
-                    };
-                    clx.green.log('Successfully parsed CLI flags')
-                    process.exit(0)
-                } catch (err) {
-                    clx.bold.red.log('Oops! Something went wrong');
-                    console.error(err);
-                    process.exit(2)
-                }
+                const cliCfg = parseCliFlagsIntoPartialConfig(flags);
+                const cfg = await resolveConfig(cliCfg);
+                
+                if (flags.json){
+                    console.log(clx.bold.magenta.write('PEVIA-CONFIGURATION ') + clx.italic.green.write(`( ${url} ) ...`))
+                    displayConfig(cfg,8, 1)
+                };
+                await runJob(
+                    {seedUrl:url,topic:cfg.topic,media:cfg.media,config:cfg}
+                );
+
+                process.exit(0);
             }
         )
 };
