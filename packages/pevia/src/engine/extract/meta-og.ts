@@ -10,7 +10,7 @@
 
 import { CheerioAPI } from "cheerio";
 import { Candidate, Page } from "../types";
-import { absolutizeUrl } from "../../util/url";
+import { absolutizeUrl } from "../../util/fs";
 
 export const extractFromMetaOG = (page:Page, $:CheerioAPI):Candidate[] =>{
     const out:Candidate[] = [];

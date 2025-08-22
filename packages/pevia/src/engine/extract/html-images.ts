@@ -4,7 +4,7 @@
  */
 import { CheerioAPI, load as loadHtml } from "cheerio";
 import { Candidate,Page } from "../types";
-import { absolutizeUrl } from "../../util/url";
+import { absolutizeUrl } from "../../util/fs";
 
 // subject to be changed in future if needed!
 const attrs = ['alt', 'srcset'];
