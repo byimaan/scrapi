@@ -20,7 +20,7 @@ const CrawlSchema = z.preprocess(
     z.object({
         depth:z.number().int().min(0).default(0), //e.g. abc.org -> depth=0 & abc.org/feat -> depth=1
         maxPages: z.number().int().positive().default(25),
-        sameOrigin: z.boolean().default(false), // if false bot is allowed to go out of website's origin
+        sameOrigin: z.boolean().default(true), // if false bot is allowed to go out of website's origin
         domains: z.array(z.string()).default([]), // explicit domains were bot can freely go with restriction
         concurrency: z.number().int().min(1).default(2), // Too early to implement for early versions
         rateLimit: z.number().min(0).default(0),
