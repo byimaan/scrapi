@@ -3,7 +3,6 @@
  */
 
 import { logger } from "../util/log";
-import {icons} from '../util/icons'
 import { Job, NotImplementedError, Page, Candidate, Accepted } from "./types";
 
 export interface EngineRunResult {
@@ -42,7 +41,7 @@ const safeStage = async <T>(
     } catch (e) {
         const err = e as Error, isNI = err instanceof NotImplementedError;
         logger()
-        .icon(isNI ? icons.warn : icons.error)
+        .icon(icons => isNI ? icons.warn : icons.error)
         .mid(clx=>clx.italic.cyan.write(` ms:${Date.now()-t0}`))
         .heading(
             isNI ? clx => clx.yellow.write('Feature unavailable')
@@ -126,7 +125,7 @@ export const runJob = async (job:Job):Promise<EngineRunResult> => {
     // --- final (summary) ---
     const gap = 4, wrapAfter = 10;
     logger()
-    .icon(icons.folder)
+    .icon(icons => icons.folder)
     .heading(clx => clx.br.blue.write('Result Summary:-'))
     .nl().pd(0)
     .body(

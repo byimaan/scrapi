@@ -3,6 +3,7 @@
  */
 import clx from '@consify/ansi';
 import { isPlainObject } from './funcs';
+import { ICONS } from './icons';
 
 type LogType =  'unknown' | 'timestamp';
 
@@ -38,7 +39,8 @@ class Logger {
         this._middle=arg;
         return this
     };
-    icon(x:string){
+    icon(x:string|((icons:typeof ICONS)=>string)){
+        if (typeof x === 'function') x = x(ICONS)
         this._icon=x;
         return this
     }

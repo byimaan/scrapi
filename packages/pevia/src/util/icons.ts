@@ -1,7 +1,7 @@
 /**
  * goal: Central set of unicode icons for pretty CLI/log output.
  */
-export const icons = {
+export const ICONS = {
   error: "❌",
   warn: "⚠️",
   info: "ℹ️",
