@@ -32,7 +32,6 @@
     "topic filter",
     "media scraper"
   ],
-  "author": "@Byimaan/SubhPB",
   "license": "ISC",
   "description": "CLI tool to scrape topic-focused images from websites, with filtering and plugin support",
   "dependencies": {
