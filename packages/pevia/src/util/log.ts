@@ -127,20 +127,96 @@ export const logger = (type:LogType= 'unknown') => {
     return ins
 };
 
-export const displayConfig = (obj:Record<string,any>,pb:number,pa=2) => {
-    for(let [k,v] of Object.entries(obj)){
-        let val = v;
-        if (typeof v === 'string') val = `"${clx.green.write(v)}"`;
-        else if (typeof v === 'boolean') val = v ? clx.green.write(`${v}`) : clx.red.write(`${v}`);
-        else if (Array.isArray(v)) val = [...v].map(x => clx.green.write(`${x}`));
-        else if (typeof v === 'number') val = clx.magenta.write(v)
-        
-        if (isPlainObject(v)){
-            clx.bold.magenta.log('\n' + ' '.repeat(pb) + `${k} configuration`.toUpperCase())
-            displayConfig(v,pb*2,pa)
-        } else {
-            if (Array.isArray(val)) val = '[' + val.join(', ') + ']'
-            console.log(' '.repeat(pb) + clx.italic.blue.write(k) + ':' + ' '.repeat(pa) + val)
-        }
-    }
+export const wrapText = (str:string, maxLength?:number) => {
+    if (maxLength===undefined) maxLength = str.length;
+    if (str.length>Math.max(0,maxLength)) return str.substring(0,maxLength) + " ...";
+    return str
 }
+
+//Responsive for boolean, array, number, string!
+const beautifyElem = (elem:any,strLimit?:number) => {
+    const elemType = typeof elem;
+    switch (elemType) {
+        case 'boolean':
+            return elem ? clx.blue.write(`${elem}`) : clx.red.write(`${elem}`)
+        case 'string':
+            return clx.green.write(wrapText(`"${elem}"`,strLimit))
+        case 'number':
+            return clx.yellow.write(elem)
+        case 'object':
+            if (Array.isArray(elem)){
+                const array:string[] = []
+                for(const x of elem){
+                    if (typeof x === 'object') array.push(
+                        clx.yellow.write('<'+x+'>')
+                    );
+                    else array.push(
+                        beautifyElem(x,strLimit)
+                    );
+                };
+                return [
+                    clx.cyan.write('[')
+                    +array.join(', ')
+                    +clx.cyan.write(']')
+                ].join(' ')
+            };
+            
+            return clx.yellow.write('<'+elemType+'>')
+        default:
+            return clx.yellow.write('<'+elemType+'>')
+    };
+};
+
+export const beautifyObjLog = (obj:any,depth=0,strLimit?:number) => {
+    if (isPlainObject(obj)){
+        for(let key in obj){
+            beautifyKeyValLog(key, obj[key],depth+1,strLimit)
+        }
+    } else {
+        const pd = "  ".repeat(depth);
+        console.log(pd+beautifyElem(obj,strLimit))
+    }
+};
+
+
+export function beautifyKeyValLog(
+    keyname:string, 
+    value:any,
+    depth:number,
+    strLimit?:number
+){
+    const pd = "  ".repeat(depth);
+    if (isPlainObject(value)){
+        if (Object.keys(value).length){
+            console.log(pd + clx.magenta.write(`"${keyname}":`))
+            beautifyObjLog(value,depth+1,strLimit)
+        } else {
+            console.log(pd+beautifyElem(keyname,strLimit)+': '+clx.blue.write('{}'))
+        }
+    } else {
+        console.log(pd+beautifyElem(keyname,strLimit)+': '+beautifyElem(value,strLimit))
+    }
+};
+
+class TextLog {
+    private str:string = '';
+    icon(
+        arg:string|((icons:typeof ICONS)=>string)
+    ){
+        if (typeof arg === 'function') this.str += arg(ICONS);
+        else this.str += arg;
+        this.str += '  '; //gap
+        return this;
+    };
+    line(arg:string|((cfn:typeof clx)=>string)){
+        if (typeof arg === 'function') this.str += arg(clx);
+        else this.str += arg;
+        return this
+    };
+    log(){
+        console.log(this.str)
+        this.str='';
+    }
+};
+
+export const text = new TextLog()

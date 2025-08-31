@@ -61,7 +61,7 @@ const OutputSchema = z.preprocess(
     z.object({
         folderTemplate: z.string().default("{topic}"),
         fileTemplate: z.string().default("{hash8}.{ext}"),
-        meta: z.enum(['csv','json']).default('csv'),
+        meta: z.enum(['csv','json']).default('json'),
         //state: maintain info e.g. visited-pages, img-hashes, resume related info
         state: z.string().default("{out}/.pevia/pevia.db")
     }),

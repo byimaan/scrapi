@@ -1,4 +1,4 @@
-import {createHash} from "node:crypto";
+import {createHash, randomBytes} from "node:crypto";
 import { windowSafe } from "./fs";
 
 //produce safe slugs for files
@@ -26,3 +26,6 @@ export const hash8 = (
     return hex.slice(0,8)
 };
 
+export const randomHash = (bytes=4) => {
+    return randomBytes(bytes).toString('hex')
+}

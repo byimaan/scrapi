@@ -67,12 +67,12 @@ export const isSubPath = (
         */
         absParent,absChild
     );
-    //In case if absParent = absChild will lead to false 
-    return !!rel && !rel.startsWith('..') && !path.isAbsolute(rel)
+    return !rel.startsWith('..') && !path.isAbsolute(rel)
 };
 
 export const safeResolveOutDir = async (
-    outRaw:string, cwd=process.cwd()
+    outRaw:string, // can be valid or corrupted
+    cwd=process.cwd()
 ) => {
     const abs = path.isAbsolute(outRaw)
                 ? path.normalize(outRaw)
@@ -80,7 +80,7 @@ export const safeResolveOutDir = async (
     try {
         return await realpath(abs)//realpath:absolute path of file/dir
     } catch {
-        return abs
+        return abs // not exist yet but it is at least absolute
     }
 };
 

@@ -9,6 +9,12 @@ export const ICONS = {
   debug: "🐞",
   trace: "🔍",
 
+  write: "📝",
+  pipeline: "🚧",
+  chain: "🔗",
+
+  trim: "✂️",
+
   search: "🔎",
   download: "⬇️",
   upload: "⬆️",
@@ -19,6 +25,10 @@ export const ICONS = {
   config: "⚙️",
   plugin: "🧩",
   lock: "🔒",
+  loading: "⏳️",
+
+  back: "⬅️",
+
   unlock: "🔓",
   timer: "⏱️",
   retry: "🔁",
@@ -28,4 +38,5 @@ export const ICONS = {
   image: "🖼️",
   video: "🎥",
   ai: "✨",
+  celebration: "🎉",
 };
