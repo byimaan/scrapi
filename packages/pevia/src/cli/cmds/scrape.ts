@@ -1,9 +1,7 @@
 import type { Command } from "commander";
-import clx from "@consify/ansi";
+import { scrapePipeline } from "../../engine/cmds/scrape/pipeline";
 import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader";
-import { displayConfig } from "../../util/log";
-import { runJob } from "../../engine/engine";
-
+import { beautifyKeyValLog } from "../../util/log";
 export default function scrape(program:Command){
     return program.command(
             "scrape"
@@ -105,13 +103,15 @@ export default function scrape(program:Command){
                 const cliCfg = parseCliFlagsIntoPartialConfig(flags);
                 const cfg = await resolveConfig(cliCfg);
                 
-                if (flags.json){
-                    console.log(clx.bold.magenta.write('PEVIA-CONFIGURATION ') + clx.italic.green.write(`( ${url} ) ...`))
-                    displayConfig(cfg,8, 1)
-                };
-                await runJob(
-                    {seedUrl:url,topic:cfg.topic,media:cfg.media,config:cfg}
-                );
+                if (flags.json)  beautifyKeyValLog(`PeviaConfiguration`,cfg,0);
+
+                /**
+                 * Later need to put value guards over file and folderTemplate in configuration.
+                 */
+                const pipeline = await scrapePipeline(url, cfg);
+
+                const pipelinePayload = await pipeline.launch();
+                // beautifyKeyValLog('ScrapePipelinePayload: ', pipelinePayload, 0, 32)
 
                 process.exit(0);
             }
