@@ -3,6 +3,7 @@
  * Stable interfaces/types for pipeline
  */
 
+import { CheerioAPI } from "cheerio";
 import { ResolveConfig } from "../config/schema";
 
 export enum ExitCode {
@@ -22,6 +23,7 @@ export type Job = {
 };
 
 export type Page = {
+  $?:CheerioAPI;
   url:string; status:number; html:string;
   text:string; // could be useful for heuristics.
 };
@@ -29,7 +31,8 @@ export type Page = {
 export type Candidate = {
   pageUrl:string;
   srcUrl:string; //abs-path
-  source: 'html'|'srcset'|'data'|'og'|'twitter'|'css' 
+  source: 'html'|'srcset'|'data'|'og'|'twitter'|'css';
+  renderer?:'html'|'headless'; 
   alt?:string; fileNameHint?:string; mimeHint?:string;
   widthHint?:number; heightHint?:number;
 };
