@@ -4,11 +4,11 @@
  */
 import path from "node:path";
 import { mkdir, writeFile } from "node:fs/promises";
-import { downloadBinary } from "./download";
-import { text } from "../../../../../util/log";
-import { isSubPath, safeResolveOutDir } from "../../../../../util/fs";
-import { ScrapePayload,ScrapeStages,FileWriteHistory, } from "../../types";
-import { rephraseDirTemplate,createSavedRow,createFailedRow,createAndWriteHistoryLogFiles } from "./auxil";
+import { downloadBinary } from "./download.js";
+import { text } from "../../../../../util/log.js";
+import { isSubPath, safeResolveOutDir } from "../../../../../util/fs.js";
+import { ScrapePayload,ScrapeStages,FileWriteHistory, } from "../../types.js";
+import { rephraseDirTemplate,createSavedRow,createFailedRow,createAndWriteHistoryLogFiles } from "./auxil.js";
 
 //subject to changed in future!
 const DOWNLOAD_MAX_TIMEOUT_MS = 10*1000;
@@ -113,7 +113,7 @@ export const fsManager = async (
                 } catch (error) {
                     failed+=1;
                     history['failed'].push(
-                        createFailedRow(error, {
+                        createFailedRow(error as Error, {
                             candidate,
                             topic
                         })
@@ -178,7 +178,7 @@ export const fsManager = async (
     } catch (error) {
         return {
             ok:false,
-            error,
+            error:error as Error,
             metadata: {}
         };
     };

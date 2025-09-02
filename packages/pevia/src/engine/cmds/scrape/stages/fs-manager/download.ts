@@ -4,7 +4,7 @@
  */
 
 import {fetch as uFetch} from 'undici';
-import { DownloadReturnType } from '../../types';
+import { DownloadReturnType } from '../../types.js';
 
 
 export const downloadBinary = async (
@@ -43,7 +43,7 @@ export const downloadBinary = async (
     } catch (error) {
         return {
             ok:false,
-            error,
+            error:error as Error,
             metadata:{
                 ms:Date.now()-t0
             }

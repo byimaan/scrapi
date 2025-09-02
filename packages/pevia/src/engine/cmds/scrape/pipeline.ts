@@ -1,12 +1,12 @@
 
-import { ScrapeGlobals, ScrapeStages } from "./types";
-import { renderHTML } from "./stages/renderer/html";
-import { extractImages } from "./stages/extractor/extract-images";
-import { filterCandidates } from "./stages/filterer/filter-candids";
-import { pipeline } from "../../../util/pipeline";
-import { text } from "../../../util/log";
-import { ResolveConfig } from "../../../config/schema";
-import { fsManager } from "./stages/fs-manager/file-system";
+import { ScrapeGlobals, ScrapeStages } from "./types.js";
+import { renderHTML } from "./stages/renderer/html.js";
+import { extractImages } from "./stages/extractor/extract-images.js";
+import { filterCandidates } from "./stages/filterer/filter-candids.js";
+import { pipeline } from "../../../util/pipeline.js";
+import { text } from "../../../util/log.js";
+import { ResolveConfig } from "../../../config/schema.js";
+import { fsManager } from "./stages/fs-manager/file-system.js";
 
 /**
  * This pipeline work per Page not handles multiple Pages!

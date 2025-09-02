@@ -24,7 +24,7 @@ class Pipeline <
     G,/**GLOBALS*/
     S/**STAGES*/
 > {
-    constructor(private payload:PipelinePayload<G,S>){
+    constructor(public payload:PipelinePayload<G,S>){
         this.payload=payload;
     };
 
@@ -53,24 +53,26 @@ class Pipeline <
             
             if (res.metadata === undefined) res.metadata = {} as {}&M;
             res.metadata.ms = Date.now()-t0;
-
-            this.payload.stages[name] = {
+            
+            //@ts-ignore
+            this.payload.stages[name]  = {
                 description,
                 res
             }
             
         } catch (error) {
-            this.payload.stages[name] = {
+            //@ts-ignore
+            this.payload.stages[name]  = {
                 description,
                 res:{
                     ok:false,
-                    error,
+                    error:error as Error,
                     metadata: {
                         ms: Date.now()-t0
                     }
                 }
             }
-            handleError(error); //Easily pluggable error handler 
+            handleError(error as Error); //Easily pluggable error handler 
         };
 
         return this

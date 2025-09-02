@@ -1,7 +1,7 @@
 import type { Command } from "commander";
-import { scrapePipeline } from "../../engine/cmds/scrape/pipeline";
-import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader";
-import { beautifyKeyValLog } from "../../util/log";
+import { scrapePipeline } from "../../engine/cmds/scrape/pipeline.js";
+import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader.js";
+import { beautifyKeyValLog } from "../../util/log.js";
 export default function scrape(program:Command){
     return program.command(
             "scrape"

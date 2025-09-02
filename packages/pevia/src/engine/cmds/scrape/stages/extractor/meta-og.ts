@@ -9,8 +9,8 @@
  */
 
 import { load as loadHTML} from "cheerio";
-import { Candidate, Page } from "../../../../types";
-import { absolutizeUrl } from "../../../../../util/fs";
+import { Candidate, Page } from "../../../../types.js";
+import { absolutizeUrl } from "../../../../../util/fs.js";
 
 type ExtractMetaOGReturnType = {
     ok: true;
@@ -65,7 +65,7 @@ export const extractFromMetaOG = (
     } catch (error) {
         return {
             ok:false,
-            error,
+            error:error as Error,
             candidates:out,
             metadata: {}
         }

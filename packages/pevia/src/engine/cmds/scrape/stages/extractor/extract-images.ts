@@ -1,8 +1,8 @@
 
-import { ScrapeStages, ScrapePayload } from "../../types";
-import { extractFromHtmlImages } from "./html-images";
-import { extractFromMetaOG } from "./meta-og";
-import { text, wrapText } from "../../../../../util/log";
+import { ScrapeStages, ScrapePayload } from "../../types.js";
+import { extractFromHtmlImages } from "./html-images.js";
+import { extractFromMetaOG } from "./meta-og.js";
+import { text, wrapText } from "../../../../../util/log.js";
 
 //Some util fns limited to this file only
 const logUrlAndCount = (cnt:number,url:string) => {

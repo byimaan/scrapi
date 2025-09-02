@@ -1,7 +1,7 @@
 
 import { load as loadHTML } from "cheerio";
-import { Candidate,Page } from "../../../../types";
-import { absolutizeUrl } from "../../../../../util/fs";
+import { Candidate,Page } from "../../../../types.js";
+import { absolutizeUrl } from "../../../../../util/fs.js";
 
 // subject to be changed in future if needed!
 const attrs = ['alt', 'srcset'];
@@ -117,7 +117,7 @@ export const extractFromHtmlImages =  (
     } catch (error) {
         return {
             ok:false,
-            error,
+            error:error as Error,
             candidates:out,
             metadata: {}
         }

@@ -2,7 +2,7 @@
 import { load as loadHtml } from "cheerio";
 import { fetch as udFetch } from "undici";
 
-import { ScrapeStages, ScrapePayload } from "../../types";
+import { ScrapeStages, ScrapePayload } from "../../types.js";
 
 // later better not to put hardcoded headers!
 const HEADERS = { 
@@ -55,7 +55,7 @@ export const renderHTML = async (
     } catch (error) {
         return {
             ok:false,
-            error,
+            error:error as Error,
         }
     } finally {
         clearTimeout(timer)

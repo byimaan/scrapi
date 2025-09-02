@@ -1,5 +1,5 @@
 import {createHash, randomBytes} from "node:crypto";
-import { windowSafe } from "./fs";
+import { windowSafe } from "./fs.js";
 
 //produce safe slugs for files
 export const slugify = (

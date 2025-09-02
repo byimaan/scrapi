@@ -3,7 +3,7 @@
  * For beta will simply return back the already extracted images
  */
 
-import { ScrapePayload, ScrapeStages } from "../../types";
+import { ScrapePayload, ScrapeStages } from "../../types.js";
 
 export const filterCandidates = async (
     getPayload:()=>ScrapePayload
@@ -24,7 +24,7 @@ export const filterCandidates = async (
     } catch (error) {
         return {
             ok:false,
-            error,
+            error:error as Error,
             metadata:{},
         }
     }

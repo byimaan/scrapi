@@ -4,7 +4,7 @@
  */
 
 import { CheerioAPI } from "cheerio";
-import { ResolveConfig } from "../config/schema";
+import { ResolveConfig } from "../config/schema.js";
 
 export enum ExitCode {
   OK = 0,

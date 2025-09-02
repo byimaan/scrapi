@@ -1,8 +1,8 @@
 import { CheerioAPI } from "cheerio";
 import { Response as UResponse } from "undici";
-import { Candidate,Page, } from "../../types";
-import { ResolveConfig } from "../../../config/schema";
-import { PipelineStage,PipelinePayload } from "../../../util/pipeline";
+import { Candidate,Page, } from "../../types.js";
+import { ResolveConfig } from "../../../config/schema.js";
+import { PipelineStage,PipelinePayload } from "../../../util/pipeline.js";
 
 
 /*****************************SCRAPE-PIPELINE*****************************/
@@ -13,7 +13,7 @@ export type ScrapeGlobals = {
     cfg:ResolveConfig;
 };
 
-export type ScrapeStages = {
+export type ScrapeStages =  {
     'renderer': 
         PipelineStage<
             {$:CheerioAPI,html:string,text:string},/*RETURN-VALUE*/

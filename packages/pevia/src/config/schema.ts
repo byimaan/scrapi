@@ -1,6 +1,6 @@
 import {z} from "zod"
-import { isPlainObject } from "../util/funcs";
-import { DEFAULT_IMG_FORMATS, EXTRACT_ATTRIBUTES, MEDIAS, RENDER_MODES, SWITCHES } from "../constants/literals";
+import { isPlainObject } from "../util/funcs.js";
+import { DEFAULT_IMG_FORMATS, EXTRACT_ATTRIBUTES, MEDIAS, RENDER_MODES, SWITCHES } from "../constants/literals.js";
 /**
  * Schema is buildup using following pieces:-
  *  [1] Base props (topic, media, out, ...)

@@ -1,9 +1,9 @@
 
 import path from "node:path";
-import { Candidate } from "../../../../types";
-import { DownloadOK,FileWriteHistory } from "../../types";
-import { extFromMime } from "../../../../../util/fs";
-import { slugify, randomHash, sha256, hash8 } from "../../../../../util/crypt";
+import { Candidate } from "../../../../types.js";
+import { DownloadOK,FileWriteHistory } from "../../types.js";
+import { extFromMime } from "../../../../../util/fs.js";
+import { slugify, randomHash, sha256, hash8 } from "../../../../../util/crypt.js";
 import { mkdir, writeFile } from "node:fs/promises";
 
 export const rephraseDirTemplate = (
@@ -108,13 +108,14 @@ export const createAndWriteHistoryLogFiles = async (
 
     if (
         Object.keys(history).reduce(
-            (prev,key) => prev || !!history[key].length, false)
+            (prev,key) => prev || !!history[key as keyof  FileWriteHistory].length, false)
         ) // At least some data should exist before creating/writing files
     {
         //Will automatically throw error if 'absDir' is not correct.
         await mkdir(absDir, {recursive:!!mkdirRecursive}); 
 
-        for(let fileName in history){
+        for(let hKey in history){
+            const fileName = hKey as keyof FileWriteHistory;
             if (!history[fileName].length) continue;
 
             const absFilePath = path.resolve(
