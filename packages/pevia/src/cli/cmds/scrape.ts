@@ -1,5 +1,5 @@
 import type { Command } from "commander";
-import { scrapePipeline } from "../../engine/cmds/scrape/pipeline.js";
+import { scrapePipe } from "../../engine/cmds/ppe-scrape/run.js";
 import { parseCliFlagsIntoPartialConfig, resolveConfig } from "../../config/loader.js";
 import { beautifyKeyValLog } from "../../util/log.js";
 export default function scrape(program:Command){
@@ -108,10 +108,8 @@ export default function scrape(program:Command){
                 /**
                  * Later need to put value guards over file and folderTemplate in configuration.
                  */
-                const pipeline = await scrapePipeline(url, cfg);
-
-                const pipelinePayload = await pipeline.launch();
-                // beautifyKeyValLog('ScrapePipelinePayload: ', pipelinePayload, 0, 32)
+                const data = await scrapePipe.run({url, ...cfg})
+                beautifyKeyValLog('Stats:', data, 0, 32)
 
                 process.exit(0);
             }
