@@ -1,6 +1,6 @@
 import {z} from "zod"
 import { isPlainObject } from "../util/funcs.js";
-import { DEFAULT_IMG_FORMATS, EXTRACT_ATTRIBUTES, MEDIAS, RENDER_MODES, SWITCHES } from "../constants/literals.js";
+import { DEFAULT_EXCLUDE_IMG_FORMATS, DEFAULT_IMG_FORMATS, EXTRACT_ATTRIBUTES, MEDIAS, RENDER_MODES, SWITCHES } from "../constants/literals.js";
 /**
  * Schema is buildup using following pieces:-
  *  [1] Base props (topic, media, out, ...)
@@ -46,6 +46,7 @@ const FilterSchema = z.preprocess(
         minWidth: z.number().int().default(256),
         minHeight: z.number().int().default(256),
         formats: z.array(z.string()).default(DEFAULT_IMG_FORMATS as any as string[]),
+        excludeFormats: z.array(z.string()).default(DEFAULT_EXCLUDE_IMG_FORMATS as any as string[]),
         altIncludes: z.array(z.string()).default([]),
         altExcludes:z.array(z.string()).default([]),
         maxImages: z.number().positive().default(100),

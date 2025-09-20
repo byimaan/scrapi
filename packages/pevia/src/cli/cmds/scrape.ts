@@ -55,7 +55,9 @@ export default function scrape(program:Command){
         )
         //filter
         .option(
-            '--formats [csv]', 'Allowed image formats, csv (jpg,png,webp)'
+            '--formats [csv]', 'Allowed image formats, csv (*,jpg,png,webp,...)'
+        ).option(
+            '--exclude-formats [csv]', 'Restricted images formats (jpg,png,webp,...)'
         ).option(
             '--min-width <px>', 'Minimum width', 
         ).option(
@@ -78,7 +80,7 @@ export default function scrape(program:Command){
             '--folder-template <tpl>', 'Folder template e.g. {topic} or {topic}/{hostname}'
         ).option(
             '--file-template <tpl>', 'File template e.g. {hash8}.{ext}'
-        ).option( // perhaps later be depreciate 
+        ).option(  
             '--meta <fmt>', 'Manifest format'
         ).option(
             '--state <path>', 'Path to state DB (sqlite)'

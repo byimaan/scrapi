@@ -22,6 +22,7 @@ export const EXTRACT_OPENGRAPH = "EXTRACT_OPENGRAPH" as const;
 export const FILTER_MIN_WIDTH = "FILTER_MIN_WIDTH" as const;
 export const FILTER_MIN_HEIGHT = "FILTER_MIN_HEIGHT" as const;
 export const FILTER_FORMATS = "FILTER_FORMATS" as const;
+export const FILTER_EXCLUDE_FORMATS = "FILTER_EXCLUDE_FORMATS" as const;
 export const FILTER_ALT_INCLUDES = "FILTER_ALT_INCLUDES" as const;
 export const FILTER_ALT_EXCLUDES = "FILTER_ALT_EXCLUDES" as const;
 export const FILTER_MAX_IMAGES = "FILTER_MAX_IMAGES" as const;
