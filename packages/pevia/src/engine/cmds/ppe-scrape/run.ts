@@ -1,12 +1,11 @@
 import { ResolveConfig } from "../../../config/schema.js";
 import { SCRAPE_PIPE } from "./ppe.js";
-import { scrapeSummaryFollowupCallback } from "./utils.js";
+import { scrapeSummaryFollowupCallback } from "./followups.js";
 
 import { RENDERER_STAGE,ReturnTypeRendererStage } from "./stages/renderer/index.js";
 import { EXTRACTOR_STAGE, ReturnTypeExtractorStage } from "./stages/extractor/index.js";
-import { FILTERER_STAGE, ReturnTypeFiltererStage } from "./stages/filterer/index.js";
 import { ENSURE_SRC_DIR_STAGE, ReturnTypeEnsureSrcDirStage } from "./stages/fs-stages/src-folder.js";
-import { DOWNLOAD_STAGE, ReturnTypeDownloadStage } from "./stages/fs-stages/download.js";
+import { DOWNLOAD_THEN_FILTER_STAGE, ReturnTypeDownloadThenFilterStage } from "./stages/fs-stages/download-then-filter.js";
 import { AUDIT_LOGS_STAGE, ReturnTypeAuditLogStage } from "./stages/fs-stages/audit-logs.js";
 
 
@@ -41,16 +40,12 @@ export const scrapePipe = {
             EXTRACTOR_STAGE.create()
         );
 
-        SCRAPE_PIPE.onlyThenStage<ReturnTypeFiltererStage>(
-            FILTERER_STAGE.create()
-        );
-
         await SCRAPE_PIPE.onlyThenAsyncStage<ReturnTypeEnsureSrcDirStage>(
             ENSURE_SRC_DIR_STAGE.create() // ensure srcfolder exist and applies folderTemplate customization
         );
 
-        await SCRAPE_PIPE.onlyThenAsyncStage<ReturnTypeDownloadStage>(
-            DOWNLOAD_STAGE.create() // download each candidate and write them in file
+        await SCRAPE_PIPE.onlyThenAsyncStage<ReturnTypeDownloadThenFilterStage>(
+            DOWNLOAD_THEN_FILTER_STAGE.create() // download each candidate and write them in file
         );
 
         await SCRAPE_PIPE.onlyThenAsyncStage<ReturnTypeAuditLogStage>(

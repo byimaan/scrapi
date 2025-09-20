@@ -1,5 +1,5 @@
 import { Candidate, Page } from "../../../../types.js";
-import { absolutizeUrl } from "../../../../../util/fs.js";
+import { absolutizeUrl }  from "../../utils.js";
 
 const selectBestSrcUrlFromSrcSet = (
     /* e.g.

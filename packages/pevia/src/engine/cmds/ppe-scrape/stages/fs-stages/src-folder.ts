@@ -2,7 +2,7 @@ import path from "node:path";
 import { mkdir } from "node:fs/promises";
 import { defineAsyncScrapeStage } from "../../ppe.js";
 import { useScrapePipe } from "../../run.js";
-import { safeResolveOutDir, isSubPath, exists } from "./utils.js";
+import { safeResolveOutDir, isSubPath, exists } from "../../utils.js";
 import { randomHash } from "../../../../../util/crypt.js";
 import { RENDERER_STAGE_NAME, ReturnTypeRendererStage } from "../renderer/index.js";
 
@@ -69,10 +69,10 @@ export const ENSURE_SRC_DIR_STAGE = defineAsyncScrapeStage<ReturnTypeEnsureSrcDi
                     };
                     await mkdir(absSrcDirPath,{recursive:true});
                     cli.text.icon(i=>i.success).line(
-                        cx=> cx.green.write(`Downloads of`)
-                                +cx.underline.green.write(` "${page.url}" `)
-                                +cx.green.write(`has got set to be stored at `)
-                                +cx.underline.green.write(`"${absSrcDirPath}"`)
+                        cx=> `Downloads of ` 
+                            +cx.underline.green.write(`"${page.url}"`)
+                            +` has got set to be stored at `
+                            +cx.underline.green.write(`"${absSrcDirPath}"`)
                     ).log();
 
                     return {

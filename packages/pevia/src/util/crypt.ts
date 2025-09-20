@@ -1,5 +1,9 @@
 import {createHash, randomBytes} from "node:crypto";
-import { windowSafe } from "./fs.js";
+
+//remove chars that can potentially cause conflicts in window system especially during fil/dir naming
+export const windowSafe = (s:string,replaceValue="") => {
+    return s.replace(/[<>:"/\\|?*]/g, replaceValue);
+};
 
 //produce safe slugs for files
 export const slugify = (

@@ -1,7 +1,7 @@
 import path from "node:path";
 import { defineAsyncScrapeStage } from "../../ppe.js";
 import { useScrapePipe } from "../../run.js";
-import { DOWNLOAD_STAGE_NAME, ReturnTypeDownloadStage } from "./download.js";
+import { DOWNLOAD_THEN_FILTER_STAGE_NAME, ReturnTypeDownloadThenFilterStage } from "./download-then-filter.js";
 import { writeFile } from"node:fs/promises";
 
 export const AUDIT_LOGS_STAGE_NAME = "AUDIT_LOGS_STAGE";
@@ -26,8 +26,15 @@ export const AUDIT_LOGS_STAGE = defineAsyncScrapeStage<ReturnTypeAuditLogStage>(
         ).handledAsyncBy<ReturnTypeAuditLogStage>(
             async ({getStageStateIfSuccessElseThrowError}) => {
                 const {getSchemaConfig, usePipeTools} = useScrapePipe();
-                const {output:{meta}}  = getSchemaConfig(), {cli} = usePipeTools();
-                const {response:{absSrcDirPath,saved,failed}} = getStageStateIfSuccessElseThrowError<ReturnTypeDownloadStage>(DOWNLOAD_STAGE_NAME);
+                const {
+                    output:{meta}
+                } = getSchemaConfig();
+                const {cli} = usePipeTools();
+                const {
+                    response:{absSrcDirPath,saved,failed, skipped}
+                } = getStageStateIfSuccessElseThrowError<ReturnTypeDownloadThenFilterStage>(
+                    DOWNLOAD_THEN_FILTER_STAGE_NAME
+                );
         
                 if (meta !== 'json'){
                     cli.text.icon(i=>i.info).line(
@@ -38,13 +45,13 @@ export const AUDIT_LOGS_STAGE = defineAsyncScrapeStage<ReturnTypeAuditLogStage>(
                 const absAuditLogsPath = path.resolve(absSrcDirPath,`./audit-logs.json`)
         
                 const json = JSON.stringify(
-                    {saved, failed},
+                    {saved, failed, skipped},
                     null, 
                     2
                 );
         
                 cli.text.icon(i=>i.file).line(
-                    cx=>cx.green.write(`Audit logs has got set to be written at "${cx.underline.write(absAuditLogsPath)}".`)
+                    cx=>`Audit logs has got set to be written at "${cx.underline.green.write(absAuditLogsPath)}".`
                 ).log();
         
                 await writeFile(absAuditLogsPath,json)
