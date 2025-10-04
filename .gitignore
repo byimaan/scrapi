@@ -9,6 +9,9 @@ node_modules
 
 sh
 
+# temporarily closed
+apps
+
 # Local env files
 .env
 .env.local

@@ -1,13 +1,52 @@
 {
-  "name": "@scarpi/pevia",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "@scrapi/pevia",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "tag": "beta"
   },
-  "keywords": [],
-  "author": "",
+  "version": "1.0.0",
+  "type": "module",
+  "types": "lib/esm/types/index.d.ts",
+  "bin": {
+    "pevia": "lib/esm/cli/index.js"
+  },
+  "scripts": {
+    "clean": "rimraf lib",
+    "build:pevia": "npm run clean && tsc -p tsconfigs/tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx src/cli/index.ts",
+    "pevia": "node lib/esm/cli/index.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "cli",
+    "image scraper",
+    "image downloader",
+    "web scraping",
+    "website images",
+    "crawler",
+    "nodejs cli",
+    "headless scraping",
+    "topic filter",
+    "media scraper"
+  ],
   "license": "ISC",
-  "type": "commonjs",
-  "description": ""
+  "description": "CLI tool to scrape topic-focused images from websites, with filtering and plugin support",
+  "dependencies": {
+    "@consify/ansi": "^1.0.1",
+    "cheerio": "^1.1.2",
+    "commander": "^14.0.0",
+    "cosmiconfig": "^9.0.0",
+    "dotenv": "^17.2.1",
+    "rimraf": "^6.0.1",
+    "sharp": "^0.34.3",
+    "undici": "^7.13.0",
+    "zod": "^4.0.16"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.4"
+  }
 }

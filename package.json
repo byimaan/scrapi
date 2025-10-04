@@ -1,5 +1,5 @@
 {
-  "name": "npm-scarpi",
+  "name": "npm-scrapi",
   "private": true,
   "scripts": {
     "build": "turbo run build",
